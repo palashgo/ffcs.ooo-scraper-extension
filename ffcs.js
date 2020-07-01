@@ -1,9 +1,5 @@
 document.body.style.border = "5px solid #7c87e8";
 
-a = $('#page_outline > nav > div > img');
-a[0].src = chrome.extension.getURL('logo.png');
-a[0].style = "height:50px;width:auto;";
-
 var s = document.createElement('script');
 s.src = chrome.extension.getURL('injected.js');
 document.documentElement.appendChild(s);
