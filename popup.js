@@ -1,10 +1,10 @@
 function check_login_ffcs(){
     var xhr = new XMLHttpRequest();
-    var url = 'https://ffcs.ooo/account';
+    var url = 'https://ffcs.ooo/api/account';
     xhr.open('GET', url, true);
     xhr.onload = function() {
     if (xhr.status === 200) {
-        if(xhr.responseURL === "https://ffcs.ooo/account"){
+        if(xhr.responseURL === "https://ffcs.ooo/api/account"){
             document.getElementById('ffcs-card').classList.remove('greyed');
             const jsonResponse = JSON.parse(xhr.responseText);
             console.log(jsonResponse);
