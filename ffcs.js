@@ -8,34 +8,35 @@ function loadAndSend(urlPattern) {
 
 	var winImage = $("#winImage").val();
 	var authorizedID = $("#authorizedIDX").val();
-
-	$.ajax({
-		type: "POST",
-		url: urlPattern,
-		data: "verifyMenu=true&winImage=" + winImage + "&authorizedID=" + authorizedID + "&nocache=@(new Date().getTime())",
-		success: function (data, textStatus, request) {
-			var status = request.status;
-			var resp = { "url": urlPattern, "data": data, "ID": authorizedID };
-			chrome.runtime.sendMessage(
+	console.log($.ajax);
+	var http = XPCNativeWrapper(new window.wrappedJSObject.XMLHttpRequest());
+	var url = urlPattern;
+	var data = "verifyMenu=true&winImage=" + winImage + "&authorizedID=" + authorizedID + "&nocache=@(new Date().getTime())";
+	http.open('POST', url, true);
+	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+	http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200) {
+			console.log(http.responseText);
+        	var resp = { "url": urlPattern, "data": http.responseText, "ID": authorizedID };
+			console.log(resp);
+			browser.runtime.sendMessage(
 				resp,
 					function (response) {
 					console.log(response);
 				}
 			);
+    	}
+	}
+	http.send(data);
 
-		},
-		error: function (request, textStatus, errorThrown) {
-		}
-	});
 }
-
+console.log($.ajax);
 
 window.addEventListener("message", function (event) {
 	if (event.data.type && (event.data.type == "start_data_sync")) {
 		console.log('Doing load and send');
 		loadAndSend('examinations/examGradeView/StudentGradeHistory');
 		loadAndSend('academics/common/Curriculum');
-		// loadAndSend('academics/common/StudentTimeTable');
 	}
 }, false);
 

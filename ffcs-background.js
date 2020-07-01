@@ -1,4 +1,4 @@
-chrome.runtime.onMessage.addListener(
+browser.runtime.onMessage.addListener(
     async function(message, sender, sendResponse) {
 		$.post('https://ffcs.ooo/ext/processExtensionData', message, async function(data) {
 			console.log(message);
