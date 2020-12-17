@@ -5,7 +5,7 @@ XMLHttpRequest = function()
     ret.addEventListener('load', function(e)
     {
 		console.log(e.srcElement.responseURL);
-		if (e.srcElement.responseURL == "https://vtop.vit.ac.in/vtop/doLogin"){
+		if (e.srcElement.responseURL == "https://vtop.vit.ac.in/vtop/academics/common/Curriculum"){
             setTimeout(function(){
 				window.postMessage({ type: "start_data_sync" }, "*");
 				console.log("Starting data sync");
